@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baserow Data Fetch Example</title>
+</head>
+<body>
+
+<h1>Baserow Data Fetch Example</h1>
+
+<div id="dataDisplay"></div>
+
+<script>
+    // Define your Baserow API URL and token
+    const baseUrl = 'https://api.baserow.io/api/database/';
+    const token = '0K1tuzFbjMj1E2C3seNxzuuIFqsckw1T';
+    
+    // Define the table ID you want to fetch data from
+    const tableId = '267478';
+    
+    // Define the endpoint to fetch data from a specific table
+    const endpoint = `rows/table/${tableId}/?user_field_names=true`;
+    
+    // Define headers including authorization
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    };
+    
+    // Reference to the div where data will be displayed
+    const dataDisplay = document.getElementById('dataDisplay');
+    
+    // Make the GET request to fetch data
+    fetch(`${baseUrl}${endpoint}`, {
+        method: 'GET',
+        headers: headers
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Data received, display it
+        dataDisplay.innerHTML = JSON.stringify(data, null, 2);
+    })
+    .catch(error => {
+        // Error occurred, display error message
+        dataDisplay.innerHTML = `Error fetching data: ${error}`;
+    });
+</script>
+
+</body>
+</html>
